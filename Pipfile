@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+prefect = "*"
+prefect-aws = "*"
+pandas = "*"
+
+[dev-packages]
+pytest = "*"
+black = "*"
+isort = "*"
+flake8 = "*"
+pre-commit = "*"
+commitizen = "*"
+pipenv = "*"
+
+[requires]
+python_version = "3.10"
