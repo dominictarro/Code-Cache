@@ -1,8 +1,6 @@
 """
 Code for working with Pandas's read & write methods.
 """
-from __future__ import annotations
-
 import enum
 import io
 

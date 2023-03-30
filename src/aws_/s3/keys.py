@@ -1,8 +1,6 @@
 """
 Code for working with AWS S3 keys.
 """
-from __future__ import annotations
-
 import enum
 import string
 from pathlib import Path
