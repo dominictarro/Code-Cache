@@ -10,6 +10,7 @@ pandas = "*"
 psutil = "*"
 prefect-github = "*"
 marshmallow = "*"
+polars = "*"
 
 [dev-packages]
 pytest = "*"

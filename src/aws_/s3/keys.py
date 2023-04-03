@@ -43,6 +43,7 @@ class S3KeyValidator:
 
     @property
     def level(self) -> Level:
+        """S3 validation strictness."""
         return self.__level
 
     @level.setter

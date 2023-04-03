@@ -11,6 +11,11 @@ from ..utilities.misc import convert_size
 def log_system_states(
     logger: logging.Logger, level: logging._Level = logging.INFO
 ):
+    """Logs memory and disk usage of the system.
+
+    :param logger:  Logger to log with
+    :param level:   Level to log at, defaults to logging.INFO
+    """
     # Memory measurements
     m = psutil.virtual_memory()
     logger.log(

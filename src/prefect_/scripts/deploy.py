@@ -10,13 +10,12 @@ from prefect.server.schemas.schedules import CronSchedule
 from prefect_aws import ECSTask
 from prefect_github import GitHubRepository
 
-
 from ...utilities.misc import list_packages
 
 
 @click.group()
 def cli():
-    ...
+    """Command call entrypoint."""
 
 
 # NOTE I do nothing, remove me
@@ -45,14 +44,14 @@ def my_flow():
     "--storage-block",
     type=str,
     default="github-repository-my-flow",
-    help="Name of the GitHubRepository Block the deployment should use."
+    help="Name of the GitHubRepository Block the deployment should use.",
 )
 @click.option(
     "-i",
     "--infra-block",
     type=str,
     default="ecs-task-my-flow",
-    help="Name of the ECSTask Block the deployment should use."
+    help="Name of the ECSTask Block the deployment should use.",
 )
 def production(
     reference: str,
@@ -75,7 +74,9 @@ def production(
     # Create infrastructure block to run production code in
     infra: ECSTask = ECSTask.load(infra_block)
     click.echo(f"Fetched ECSTask Block '{infra._block_document_name}'")
-    infra.env.update(dict(EXTRA_PIP_PACKAGES=" ".join(list_packages(True, False))))
+    infra.env.update(
+        dict(EXTRA_PIP_PACKAGES=" ".join(list_packages(True, False)))
+    )
 
     prod_deployment: Deployment = Deployment.build_from_flow(
         flow=my_flow,
@@ -123,14 +124,14 @@ def production(
     "--storage-block",
     type=str,
     default="github-repository-my-flow",
-    help="Name of the GitHubRepository Block the deployment should use."
+    help="Name of the GitHubRepository Block the deployment should use.",
 )
 @click.option(
     "-i",
     "--infra-block",
     type=str,
     default="ecs-task-my-flow",
-    help="Name of the ECSTask Block the deployment should use."
+    help="Name of the ECSTask Block the deployment should use.",
 )
 def development(
     reference: str,

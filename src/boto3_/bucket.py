@@ -2,19 +2,17 @@
 Module for simplified S3 Bucket operations.
 """
 from __future__ import annotations
-import functools
 
+import dataclasses as dc
 from pathlib import Path
-from typing import Callable, Generator, TypeVar, Any
+from typing import Any, Callable, Generator, TypeVar
 
 # Installing boto3 (AWS's Python package)
 #  - https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html
 import boto3
-import dataclasses as dc
 from marshmallow import Schema, fields, post_load
 
 from .object_summary import ObjectSummary
-
 
 Boto3ObjectSummary = TypeVar("Boto3ObjectSummary")
 
@@ -80,7 +78,7 @@ class S3Bucket:
         """Yields files in the bucket with the prefix."""
         yield from filter(
             lambda o: o.key.endswith("/") is False,
-            self.all(prefix, caster=caster)
+            self.all(prefix, caster=caster),
         )
 
     def folders(
@@ -90,17 +88,18 @@ class S3Bucket:
     ) -> Generator[Boto3ObjectSummary | ObjectSummary | Any, None, None]:
         """Yields folders in the bucket with the prefix."""
         yield from filter(
-            lambda o: o.key.endswith("/"),
-            self.all(prefix, caster=caster)
+            lambda o: o.key.endswith("/"), self.all(prefix, caster=caster)
         )
 
 
 class S3BucketSchema(Schema):
     """Schema for `S3Bucket`."""
+
     name = fields.Str(required=True)
     bucket_folder = fields.Str(required=False)
     profile = fields.Str(required=False)
 
     @post_load
     def make_bucket(self, data, **kwds) -> S3Bucket:
+        """Constructs an `S3Bucket` from a dictionary configuration."""
         return S3Bucket(**data)
